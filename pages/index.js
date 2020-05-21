@@ -1,7 +1,16 @@
+import { useState } from "react";
 import fetchFromUtils from "../utils/fetchFromUtils";
 import Head from "next/head";
 
 export default function Home({ vercel_url }) {
+  const [realtimeEnv, setRealtimeEnv] = useState(null);
+
+  const loadEnv = async (e) => {
+    e.preventDefault();
+    const { vercel_url } = await fetchFromUtils();
+    setRealtimeEnv(vercel_url);
+  };
+
   return (
     <div className="container">
       <Head>
@@ -22,6 +31,12 @@ export default function Home({ vercel_url }) {
         <div>
           <h2>Runtime VERCEL_URL is</h2>
           <pre>{vercel_url}</pre>
+        </div>
+
+        <div>
+          <h2>Realtime VERCEL_URL is</h2>
+          <button onClick={loadEnv}>Load Env</button>
+          <pre>{realtimeEnv}</pre>
         </div>
       </main>
 
