@@ -1,3 +1,4 @@
+import fetchFromUtils from "../utils/fetchFromUtils";
 import Head from "next/head";
 
 export default function Home({ vercel_url }) {
@@ -187,8 +188,8 @@ export default function Home({ vercel_url }) {
 export async function getServerSideProps() {
   const protocol =
     process.env.NODE_ENV !== "development" ? "https://" : "http://";
-  const res = await fetch(protocol + process.env.VERCEL_URL + `/api/runtime`);
-  const { vercel_url } = await res.json();
+  const res = await fetchFromUtils();
+  const { vercel_url } = res;
   return {
     props: { vercel_url },
   };
